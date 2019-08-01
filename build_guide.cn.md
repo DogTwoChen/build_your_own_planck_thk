@@ -271,4 +271,38 @@ PH接口焊接在 `ALT USB PORT` 的位置。
 链接完成后，将Pro Micro用USB线链接至电脑，PCB则只通过ISP报头链接Pro Micro，PCB本身不直接连电脑。进行如下操作：
 
 - 设置Fuse位， 运行命令 ```avrdude -c avrisp -P <端口号> -p atmega32 -U lfuse:w:0xcf:m -U hfuse:w:0x90:m```
-- 
+- 生成配列hex文件。推荐使用[qmk_firmware的planck_thk分支](https://github.com/qmk/qmk_firmware/tree/planck_thk)。在qmk_firmware根目录下运行``` make plank/thk:default```（其中default可以替换成自己的配列文件目录的名称）。运行成功后，根目录下会生成`planck_thk_default.hex`文件
+- 将hex文件通过ISP刷到键盘上。运行命令``` avrdude -c avrisp -P <端口号> -p atmega32 -U flash:w:planck_thk_default.hex```，若刷机成功，会看到终端上有下述显示，同时，扬声器会响起默认开机音乐
+
+``` 
+avrdude: AVR device initialized and ready to accept instructions
+
+Reading | ################################################## | 100% 0.01s
+
+avrdude: Device signature = 0x1e9502 (probably m32)
+avrdude: NOTE: "flash" memory has been specified, an erase cycle will be performed
+         To disable this feature, specify the -D option.
+avrdude: erasing chip
+avrdude: reading input file "planck_thk_default.hex"
+avrdude: input file planck_thk_default.hex auto detected as Intel Hex
+avrdude: writing flash (26260 bytes):
+
+Writing | ################################################## | 100% 14.60s
+
+avrdude: 26260 bytes of flash written
+avrdude: verifying flash memory against planck_thk_default.hex:
+avrdude: load data flash data from input file planck_thk_default.hex:
+avrdude: input file planck_thk_default.hex auto detected as Intel Hex
+avrdude: input file planck_thk_default.hex contains 26260 bytes
+avrdude: reading on-chip flash data:
+
+Reading | ################################################## | 100% 8.52s
+
+avrdude: verifying ...
+avrdude: 26260 bytes of flash verified
+
+avrdude: safemode: Fuses OK (E:FF, H:D0, L:0F)
+
+avrdude done.  Thank you.
+```
+
