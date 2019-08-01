@@ -268,7 +268,11 @@ PH接口焊接在 `ALT USB PORT` 的位置。
 > Pro Micro VCC      <-> Keyboard VCC
 > Pro Micro GND      <-> Keyboard GND
 
-链接完成后，将Pro Micro用USB线链接至电脑，PCB则只通过ISP报头链接Pro Micro，PCB本身不直接连电脑。进行如下操作：
+链接完成后，将Pro Micro用USB线链接至电脑，PCB则只通过ISP报头链接Pro Micro，PCB本身不直接连电脑，如下图所示：
+
+![Pro Micro ISP](https://i.ibb.co/nn8d5Dm/751698429.jpg)
+
+进行如下操作：
 
 - 设置Fuse位， 运行命令 ```avrdude -c avrisp -P <端口号> -p atmega32 -U lfuse:w:0xcf:m -U hfuse:w:0x90:m```
 - 生成配列hex文件。推荐使用[qmk_firmware的planck_thk分支](https://github.com/qmk/qmk_firmware/tree/planck_thk)。在qmk_firmware根目录下运行``` make plank/thk:default```（其中default可以替换成自己的配列文件目录的名称）。运行成功后，根目录下会生成`planck_thk_default.hex`文件
